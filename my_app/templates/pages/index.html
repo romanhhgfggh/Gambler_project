@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gambler Project</title>
-</head>
-<body>
-    <h1>{{ title }}</h1>
-    <p>{{ content }}</p>
-{% if is_home %}
-    <a href="/about/">About</a>
-    <a href="/contact/">Contact</a>
-{% else %}
-    <a href="/">Home</a>
-{% endif %}
+{% extends 'pages/base.html' %}
 
-</body>
-</html>
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>Список торгових інструментів</h1>
+    
+    {% if assets %}
+        {% for asset in assets %}
+            <div class="asset-card">
+                <h3>{{ asset.title }} ({{ asset.ticker }})</h3>
+                <p>Категорія: {{ asset.category.title }}</p>
+                <p>Ціна: <b>${{ asset.price }}</b></p>
+                <button>Детальніше</button>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Активів поки немає в базі даних.</p>
+    {% endif %}
+{% endblock %}

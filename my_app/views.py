@@ -1,24 +1,23 @@
 from django.shortcuts import render
+from .models import Asset, Category
 
-def home(request):
+def home(request, cat_id=None):
+    categories = Category.objects.all()
+    
+    if cat_id:
+        assets = Asset.objects.filter(category_id=cat_id)
+        current_category = Category.objects.get(id=cat_id)
+        title = f"Категорія: {current_category.title}"
+    else:
+        assets = Asset.objects.all()
+        title = "Всі активи"
+
     context = {
-        'title': 'Home',
-        'content': 'Welcome to the home page',
-        'is_home': True,
+        'assets': assets,
+        'categories': categories,
+        'title': title,
     }
     return render(request, 'pages/index.html', context)
 def about(request):
-    context = {
-        'title': 'About',
-        'content': 'Its DjangoProject from Roman_Tyshchuk from 21ICT group',
-        'is_home': False,
-    }
-    return render(request, 'pages/index.html', context)
-def contact(request):
-    context = {
-        'title': 'Contact',
-        'content': 'This project is hosted on github: https://github.com/romanhhgfggh/Gambler_project.git' ,
-        'is_home': False,
-    }
-    return render(request, 'pages/index.html', context)
-# Create your views here.
+    categories = Category.objects.all() 
+    return render(request, 'pages/about.html', {'categories': categories})

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Trading Directory{% endblock %}</title>
+    <style>
+        /* Мінімальні стилі для структури */
+        body { font-family: Arial, sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: #2c3e50; color: white; padding: 1rem; }
+        nav a { color: white; margin-right: 15px; text-decoration: none; }
+        main { flex: 1; padding: 20px; }
+        footer { background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #dee2e6; }
+        .asset-card { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<header style="background: #2c3e50; color: white; padding: 1rem;">
+    <nav>
+        <a href="{% url 'home' %}" style="color: white; margin-right: 15px; text-decoration: none;"><b>Головна</b></a>
+        
+        {% for cat in categories %}
+            <a href="{% url 'category_filter' cat.id %}" style="color: #ecf0f1; margin-right: 15px; text-decoration: none;">
+                {{ cat.title }}
+            </a>
+        {% endfor %}
+        
+        <a href="{% url 'about' %}" style="color: white; text-decoration: none;">Про нас</a>
+    </nav>
+</header>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer>
+    <p>&copy; 2026 Simple Trading Directory. Всі права захищені.</p>
+    <p>Слідкуйте за графіками відповідально.</p>
+</footer>
+
+</body>
+</html>

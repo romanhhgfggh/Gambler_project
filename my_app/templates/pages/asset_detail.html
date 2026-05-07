@@ -1,0 +1,43 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}{{ asset.title }}{% endblock %}
+
+{% block content %}
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #fff;">
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+
+            <div style="flex-shrink: 0; width: 250px;">
+                {% if asset.image %}
+                    <img src="{{ asset.image.url }}" alt="{{ asset.title }}" style="width: 100%; max-height: 300px; object-fit: contain; border-radius: 8px; border: 1px solid #eee; padding: 15px; background-color: #f8f9fa; box-sizing: border-box;">
+                {% else %}
+                    <div style="width: 100%; height: 250px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; color: #adb5bd; border-radius: 8px; border: 1px dashed #ced4da;">
+                        Логотип відсутній
+                    </div>
+                {% endif %}
+            </div>
+
+            <div style="flex-grow: 1;">
+                <h1 style="margin-top: 0; margin-bottom: 10px; color: #333;">{{ asset.title }} <span style="color: #6c757d; font-size: 0.8em;">({{ asset.ticker }})</span></h1>
+                <p style="margin-bottom: 20px;">Категорія: <a href="{% url 'category_filter' asset.category.id %}" style="color: #007bff; text-decoration: none;">{{ asset.category.title }}</a></p>
+                
+                <h2 style="color: #28a745; margin-bottom: 20px;">Ціна: ${{ asset.price }}</h2>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 5px; color: #333;">Про актив</h3>
+                    {% if asset.description %}
+                        <p style="line-height: 1.6; color: #495057;">{{ asset.description|linebreaksbr }}</p>
+                    {% else %}
+                        <p style="color: #adb5bd; font-style: italic;">Опис для цього активу ще не додано.</p>
+                    {% endif %}
+                </div>
+
+                <p style="font-size: 0.9em; color: #6c757d;">Додано в систему: {{ asset.created_at|date:"d.m.Y H:i" }}</p>
+
+                <button disabled style="background-color: #6c757d; color: white; padding: 12px 24px; border: none; border-radius: 5px; font-size: 16px; cursor: not-allowed; margin-top: 10px; width: 100%; max-width: 200px;">
+                    Купити актив
+                </button>
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}

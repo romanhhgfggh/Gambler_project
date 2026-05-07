@@ -1,0 +1,23 @@
+{% extends 'pages/base.html' %}
+{% block title %}Мій Watchlist{% endblock %}
+
+{% block content %}
+    <h1>Список спостереження (Watchlist)</h1>
+    
+    {% if assets %}
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        {% for asset in assets %}
+            <div class="asset-card" style="width: 250px; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+                {% if asset.image %}
+                    <img src="{{ asset.image.url }}" alt="{{ asset.title }}" style="width: 100%; height: 200px; object-fit: contain; padding: 10px; background-color: #f8f9fa; border-radius: 5px; box-sizing: border-box; margin-bottom: 10px;">
+                {% endif %}
+                <h3>{{ asset.title }} ({{ asset.ticker }})</h3>
+                <p>Ціна: <b>${{ asset.price }}</b></p>
+                <a href="{% url 'assets_detailed' asset.id %}" style="display: block; text-align: center; background: #2c3e50; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">Перейти до графіка</a>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>Ваш список спостереження порожній. Перейдіть на головну, щоб додати інструменти для аналізу.</p>
+    {% endif %}
+{% endblock %}

@@ -26,6 +26,8 @@
         {% endfor %}
         
         <a href="{% url 'about' %}" style="color: white; text-decoration: none;">Про нас</a>
+
+        <a href="{% url 'watchlist_view' %}" style="color: #f1c40f; margin-right: 15px; text-decoration: none;"><b>Мій Watchlist</b></a>
     </nav>
 </header>
 
@@ -37,6 +39,14 @@
 <footer>
     <p>&copy; 2026 The Rational Gambler. Всі права захищені.</p>
     <p>Don`t be a Gambler.</p>
+    <div style="margin-top: 20px;">
+    <strong>Підписка на аналітику ринку:</strong>
+    <form action="{% url 'subscribe_newsletter' %}" method="post" style="margin-top: 10px;">
+        {% csrf_token %}
+        <input type="email" name="email" required placeholder="Ваш email" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+        <button type="submit" style="padding: 8px 15px; background: #2c3e50; color: white; border: none; border-radius: 4px; cursor: pointer;">Підписатись</button>
+    </form>
+</div>
 </footer>
 
 </body>

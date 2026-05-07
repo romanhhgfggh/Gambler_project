@@ -21,7 +21,7 @@
 
                 <h3>{{ asset.title }} ({{ asset.ticker }})</h3>
                 <p>Категорія: {{ asset.category.title }}</p>
-                <p>Ціна: <b>${{ asset.price }}</b></p>
+                <p class="card-text">Ціна: <strong>${{ asset.dynamic_price }}</strong></p>
                 <a href="{% url 'assets_detailed' asset.id %}" class="btn btn-primary" style="display: block; text-align: center; margin-top: 10px;">Детальніше</a>
             </div>
         {% endfor %}

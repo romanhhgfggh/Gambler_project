@@ -1,0 +1,379 @@
+/* =========================================
+   Глобальні стилі
+   ========================================= */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.content-wrapper {
+    flex: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   Навігація (Шапка) та Логотип
+   ========================================= */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #343a40;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    color: #f1c40f;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-logo:hover {
+    color: #fff;
+}
+
+.nav-links a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #f1c40f;
+}
+
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* =========================================
+   Кнопки
+   ========================================= */
+.btn-custom {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.btn-primary-custom { background: #2c3e50; color: white; }
+.btn-primary-custom:hover { background: #1a252f; }
+
+.btn-danger-custom { background: #e74c3c; color: white; }
+.btn-danger-custom:hover { background: #c0392b; }
+
+.btn-success-custom { background: #28a745; color: white; }
+.btn-success-custom:hover { background: #218838; }
+
+.btn-warning-custom { background: #f1c40f; color: #2c3e50; }
+.btn-warning-custom:hover { background: #d4ac0d; }
+
+.btn-purchased { background: #95a5a6; color: white; cursor: not-allowed; }
+
+/* =========================================
+   Заголовки та Фільтри
+   ========================================= */
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+.categories-container, .back-link-container {
+    text-align: center;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* =========================================
+   Сітка Карток (SMC Стилізація)
+   ========================================= */
+.cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.clickable-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+}
+
+.card-smc {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.clickable-card:hover .card-smc {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    border-color: #f1c40f;
+}
+
+/* Жовті SMC роздільники для блоків S/D */
+.clickable-card:nth-child(odd) .card-smc { border-top: 6px solid #f39c12; }
+.clickable-card:nth-child(even) .card-smc { border-top: 6px solid #f1c40f; }
+
+/* =========================================
+   Оптимізація Зображень Активів
+   ========================================= */
+.card-image-wrapper {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* =========================================
+   Тексти всередині Картки
+   ========================================= */
+.card-text-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-text-block h2 {
+    margin: 0 0 5px 0;
+    font-size: 1.5rem;
+    color: #2c3e50;
+}
+
+.asset-ticker {
+    color: #7f8c8d;
+    font-weight: bold;
+    margin: 0;
+}
+
+.asset-category {
+    color: #95a5a6;
+    font-size: 14px;
+    margin: 5px 0 0 0;
+}
+
+.asset-price {
+    color: #28a745;
+    font-size: 2rem;
+    margin: 0;
+    text-align: right;
+    font-weight: bold;
+}
+
+.empty-state {
+    text-align: center;
+    width: 100%;
+    margin-top: 50px;
+    color: #7f8c8d;
+    font-size: 1.2rem;
+}
+
+/* =========================================
+   Особистий кабінет (Таблиці)
+   ========================================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #343a40;
+    color: white;
+    font-weight: bold;
+}
+
+table tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* =========================================
+   Футер
+   ========================================= */
+.site-footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 30px 20px;
+    margin-top: auto;
+    border-top: 3px solid #f1c40f;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.footer-col h4 {
+    color: #f1c40f;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.footer-col p {
+    margin: 5px 0;
+    line-height: 1.5;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    border-color: #f1c40f;
+    outline: none;
+    box-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
+}
+
+/* Прибираємо маркери списку для помилок форми */
+.errorlist {
+    color: #e74c3c;
+    font-size: 13px;
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+}
+/* =========================================
+   Форми Авторизації та Відновлення
+   ========================================= */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.auth-card-wide {
+    max-width: 450px;
+    align-items: center;
+    text-align: center;
+}
+
+/* Кольорові рамки для різних етапів */
+.border-primary { border-top: 6px solid #2c3e50 !important; }
+.border-success { border-top: 6px solid #28a745 !important; }
+.border-warning { border-top: 6px solid #f39c12 !important; }
+.border-danger { border-top: 6px solid #e74c3c !important; }
+
+/* Внутрішні елементи форми */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.auth-label {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.auth-text-muted {
+    text-align: center;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.auth-link {
+    color: #7f8c8d;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.auth-link:hover {
+    color: #f1c40f;
+}

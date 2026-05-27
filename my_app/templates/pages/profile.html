@@ -1,0 +1,25 @@
+{% extends 'pages/base.html' %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    
+    {% if orders %}
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <tr style="background: #f8f9fa; border-bottom: 2px solid #ddd;">
+                <th style="padding: 10px; text-align: left;">Дата покупки</th>
+                {% if user.is_superuser %}<th style="padding: 10px; text-align: left;">Клієнт</th>{% endif %}
+                <th style="padding: 10px; text-align: left;">Тариф</th>
+                <th style="padding: 10px; text-align: left;">Сума</th>
+            </tr>
+            {% for order in orders %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 10px;">{{ order.created_at|date:"d M Y H:i" }}</td>
+                {% if user.is_superuser %}<td style="padding: 10px; font-weight: bold;">{{ order.user.username }}</td>{% endif %}
+                <td style="padding: 10px; color: #f39c12; font-weight: bold;">{{ order.plan.title }}</td>
+                <td style="padding: 10px;">${{ order.plan.price }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>У вас ще немає активних підписок. <a href="{% url 'pricing' %}">Перейти до тарифів</a></p>
+    {% endif %}
+{% endblock %}

@@ -32,13 +32,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # ТВІЙ ДОДАТОК ТЕПЕР ПЕРШИЙ (щоб шаблони завантажувались правильно):
+    'my_app',
+    
+    # Стандартні додатки:
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'my_app'
 ]
 
 MIDDLEWARE = [
@@ -120,3 +123,9 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGIN_REDIRECT_URL = '/' 
+LOGOUT_REDIRECT_URL = '/'
+
+# Емуляція відправки email у термінал (обов'язково для відновлення пароля без SMTP)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

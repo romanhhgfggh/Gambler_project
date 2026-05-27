@@ -1,23 +1,44 @@
 {% extends 'pages/base.html' %}
-{% block title %}Мій Watchlist{% endblock %}
 
 {% block content %}
-    <h1>Список спостереження (Watchlist)</h1>
-    
-    {% if assets %}
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-        {% for asset in assets %}
-            <div class="asset-card" style="width: 250px; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-                {% if asset.image %}
-                    <img src="{{ asset.image.url }}" alt="{{ asset.title }}" style="width: 100%; height: 200px; object-fit: contain; padding: 10px; background-color: #f8f9fa; border-radius: 5px; box-sizing: border-box; margin-bottom: 10px;">
-                {% endif %}
-                <h3>{{ asset.title }} ({{ asset.ticker }})</h3>
-                <p>Ціна: <b>${{ asset.price }}</b></p>
-                <a href="{% url 'assets_detailed' asset.id %}" style="display: block; text-align: center; background: #2c3e50; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">Перейти до графіка</a>
+<div class="page-header">
+    <h1>Мій Watchlist (Кошик)</h1>
+</div>
+
+<div class="back-link-container">
+    <a href="{% url 'home' %}" class="btn-custom btn-primary-custom">← Повернутися на головне меню</a>
+</div>
+
+<div class="cards-grid">
+    {% for asset in assets %}
+        <a href="{% url 'assets_detailed' asset.id %}" class="clickable-card">
+            <div class="card-smc">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    {% if asset.image %}
+                        <div class="card-image-wrapper">
+                            <img src="{{ asset.image.url }}" alt="{{ asset.title }}" class="card-image">
+                        </div>
+                    {% endif %}
+                    
+                    <div class="card-text-block">
+                        <h2>{{ asset.title }}</h2>
+                        <p class="asset-ticker">{{ asset.ticker }}</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+                    <h3 class="asset-price">${{ asset.dynamic_price }}</h3>
+                    <object>
+                        <a href="{% url 'remove_from_watchlist' asset.id %}" class="btn-custom btn-danger-custom">Видалити</a>
+                    </object>
+                </div>
             </div>
-        {% endfor %}
+        </a>
+    {% empty %}
+        <div class="empty-state">
+            <p>Ваш кошик поки що порожній.</p>
+            <a href="{% url 'home' %}" class="btn-custom btn-warning-custom">Перейти до каталогу</a>
         </div>
-    {% else %}
-        <p>Ваш список спостереження порожній. Перейдіть на головну, щоб додати інструменти для аналізу.</p>
-    {% endif %}
+    {% endfor %}
+</div>
 {% endblock %}

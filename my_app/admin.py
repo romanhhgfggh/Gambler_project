@@ -39,3 +39,12 @@ class NewsletterAdmin(admin.ModelAdmin):
     
     # Сортуємо: спочатку найновіші підписки
     ordering = ('-subscribed_at',)
+from .models import SubscriptionPlan, Order
+
+@admin.register(SubscriptionPlan)
+class SubscriptionPlanAdmin(admin.ModelAdmin):
+    list_display = ('title', 'price')
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('user', 'plan', 'created_at')

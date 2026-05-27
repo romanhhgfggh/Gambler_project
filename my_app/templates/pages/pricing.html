@@ -1,0 +1,14 @@
+{% for plan in plans %}
+    <div class="card" style="padding: 20px; text-align: center;">
+        <h2>{{ plan.title }}</h2>
+        <h3>${{ plan.price }}</h3>
+        
+        {% if plan.id in purchased_plan_ids %}
+            <button class="btn-custom btn-purchased" disabled>✓ Вже придбано (Активно)</button>
+        {% elif user.is_authenticated %}
+            <a href="{% url 'buy_subscription' plan.id %}" class="btn-custom btn-primary-custom">Придбати</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn-custom btn-purchased">Увійдіть для покупки</a>
+        {% endif %}
+    </div>
+{% endfor %}

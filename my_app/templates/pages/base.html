@@ -1,53 +1,54 @@
+{% load static %} 
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Trading Directory{% endblock %}</title>
-    <style>
-        /* Мінімальні стилі для структури */
-        body { font-family: Arial, sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
-        header { background: #2c3e50; color: white; padding: 1rem; }
-        nav a { color: white; margin-right: 15px; text-decoration: none; }
-        main { flex: 1; padding: 20px; }
-        footer { background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #dee2e6; }
-        .asset-card { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
-    </style>
+    <title>The Rational Gambler</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
-<header style="position: sticky; top: 0; z-index: 1000; background-color: #343a40; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-    <nav>
-        <a href="{% url 'home' %}" style="color: white; margin-right: 15px; text-decoration: none;"><b>Головна</b></a>
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="nav-logo">The Rational Gambler</a>
         
-        {% for cat in categories %}
-            <a href="{% url 'category_filter' cat.id %}" style="color: #ecf0f1; margin-right: 15px; text-decoration: none;">
-                {{ cat.title }}
-            </a>
-        {% endfor %}
-        
-        <a href="{% url 'about' %}" style="color: white; text-decoration: none;">Про нас</a>
+        <div class="nav-links">
+            <a href="{% url 'watchlist_view' %}">Мій Watchlist</a>
+            <a href="{% url 'pricing' %}">Тарифи</a>
+            <a href="{% url 'vip_analytics' %}">VIP Аналітика</a>
+        </div>
 
-        <a href="{% url 'watchlist_view' %}" style="color: #f1c40f; margin-right: 15px; text-decoration: none;"><b>Мій Watchlist</b></a>
+        <div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="btn-custom btn-warning">Кабінет ({{ user.username }})</a>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-custom btn-danger">Вийти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-custom btn-success">Увійти</a>
+                <a href="{% url 'register' %}" class="btn-custom btn-primary">Реєстрація</a>
+            {% endif %}
+        </div>
     </nav>
-</header>
 
-<main>
-    {% block content %}
-    {% endblock %}
-</main>
+    <div style="padding: 20px;">
+        {% block content %}{% endblock %}
+    </div>
 
-<footer>
-    <p>&copy; 2026 The Rational Gambler. Всі права захищені.</p>
-    <p>Don`t be a Gambler.</p>
-    <div style="margin-top: 20px;">
-    <strong>Підписка на аналітику ринку:</strong>
-    <form action="{% url 'subscribe_newsletter' %}" method="post" style="margin-top: 10px;">
-        {% csrf_token %}
-        <input type="email" name="email" required placeholder="Ваш email" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-        <button type="submit" style="padding: 8px 15px; background: #2c3e50; color: white; border: none; border-radius: 4px; cursor: pointer;">Підписатись</button>
-    </form>
-</div>
-</footer>
+    <footer class="site-footer">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between;">
+            <div>
+                <h4 style="color: #f1c40f;">The Rational Gambler</h4>
+                <p>Аналізуйте ринки раціонально, дотримуйтесь SMC та працюйте без емоцій.</p>
+            </div>
+            <div>
+                <h4 style="color: #f1c40f;">Контакти</h4>
+                <p>Email: support@gambler.pp.ua</p>
+                <p>Telegram: @rational_gambler</p>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .checkout-box { max-width: 500px; margin: 60px auto; padding: 40px; background-color: #1e1e1e; border: 1px solid #333; border-radius: 12px; color: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .checkout-header { border-bottom: 1px solid #444; padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
+    .order-summary { background-color: #2a2a2a; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #f1c40f; }
+    .price-row { display: flex; justify-content: space-between; font-size: 22px; font-weight: bold; color: #f1c40f; margin-top: 15px; }
+    .pay-btn { width: 100%; padding: 16px; background-color: #f1c40f; color: #000; font-size: 18px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+    .pay-btn:hover { background-color: #d4ac0d; transform: scale(1.02); }
+</style>
+
+<div class="checkout-box">
+    <div class="checkout-header">
+        <h2 style="color: #f1c40f; margin: 0;">Підтвердження покупки</h2>
+    </div>
+    
+    <div class="order-summary">
+        <p style="color: #888; font-size: 14px; margin-bottom: 5px; text-transform: uppercase;">Обраний тариф</p>
+        <h3 style="margin-top: 0; font-size: 24px;">{{ plan.title }}</h3>
+        <p style="color: #ccc; font-size: 15px; margin-bottom: 0; line-height: 1.5;">{{ plan.description }}</p>
+        
+        <hr style="border-color: #444; margin: 20px 0;">
+        
+        <div class="price-row">
+            <span>До списання:</span>
+            <span>${{ plan.price }}</span>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="pay-btn">Оплатити підписку</button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{% url 'pricing' %}" style="color: #888; text-decoration: none; font-size: 14px;">← Повернутися до вибору тарифів</a>
+    </div>
+</div>
+{% endblock %}

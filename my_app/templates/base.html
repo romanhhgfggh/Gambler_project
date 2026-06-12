@@ -31,6 +31,18 @@
             {% endif %}
         </div>
     </nav>
+    {% if messages %}
+    <div style="max-width: 800px; margin: 20px auto; padding: 15px; text-align: center;">
+        {% for message in messages %}
+            <div style="padding: 10px; border-radius: 5px; margin-bottom: 10px; 
+                        {% if message.tags == 'warning' %}background-color: #f39c12; color: #fff;
+                        {% elif message.tags == 'success' %}background-color: #2ecc71; color: #fff;
+                        {% else %}background-color: #3498db; color: #fff;{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 
     <div style="padding: 20px;">
         {% block content %}{% endblock %}

@@ -1,25 +1,36 @@
-{% extends 'pages/base.html' %}
+{% extends 'base.html' %}
+
 {% block content %}
-    <h1>{{ title }}</h1>
-    
+<div style="max-width: 800px; margin: 40px auto; color: #fff;">
+    <h1 style="color: #f1c40f; border-bottom: 2px solid #333; padding-bottom: 10px;">{{ title }}</h1>
+
     {% if orders %}
-        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-            <tr style="background: #f8f9fa; border-bottom: 2px solid #ddd;">
-                <th style="padding: 10px; text-align: left;">Дата покупки</th>
-                {% if user.is_superuser %}<th style="padding: 10px; text-align: left;">Клієнт</th>{% endif %}
-                <th style="padding: 10px; text-align: left;">Тариф</th>
-                <th style="padding: 10px; text-align: left;">Сума</th>
-            </tr>
+        <div style="margin-top: 30px;">
             {% for order in orders %}
-            <tr style="border-bottom: 1px solid #eee;">
-                <td style="padding: 10px;">{{ order.created_at|date:"d M Y H:i" }}</td>
-                {% if user.is_superuser %}<td style="padding: 10px; font-weight: bold;">{{ order.user.username }}</td>{% endif %}
-                <td style="padding: 10px; color: #f39c12; font-weight: bold;">{{ order.plan.title }}</td>
-                <td style="padding: 10px;">${{ order.plan.price }}</td>
-            </tr>
+                <div style="background-color: #1e1e1e; border: 1px solid #333; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                    <h3 style="margin-top: 0; color: #28a745;">Тариф: {{ order.plan.title }}</h3>
+                    <p style="color: #ccc;">Дата оформлення: {{ order.created_at|date:"d.m.Y H:i" }}</p>
+                    
+                    {% if 'Pro' in order.plan.title or order.plan.price|stringformat:"s" == "49.99" %}
+                        <div style="margin-top: 20px; padding: 20px; background-color: #2a2a2a; border-left: 4px solid #0088cc; border-radius: 4px;">
+                            <h4 style="color: #0088cc; margin-top: 0; margin-bottom: 10px; font-size: 18px;">Бонус тарифу Pro 💎</h4>
+                            <p style="color: #aaa; font-size: 14px; margin-bottom: 20px; line-height: 1.5;">
+                                Як власник Pro-підписки, ви маєте ексклюзивний доступ до нашого закритого ком'юніті. Там ми розбираємо сетапи та обговорюємо ринок у реальному часі.
+                            </p>
+                            <a href="https://t.me/cryptohustlesm" target="_blank" style="display: inline-block; background-color: #0088cc; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: background-color 0.3s;">
+                                Приєднатися до Telegram VIP
+                            </a>
+                        </div>
+                    {% endif %}
+                    
+                </div>
             {% endfor %}
-        </table>
+        </div>
     {% else %}
-        <p>У вас ще немає активних підписок. <a href="{% url 'pricing' %}">Перейти до тарифів</a></p>
+        <div style="text-align: center; padding: 50px; background-color: #1e1e1e; border-radius: 8px; margin-top: 30px; border: 1px solid #333;">
+            <p style="color: #aaa; font-size: 18px; margin-bottom: 20px;">У вас ще немає активних підписок.</p>
+            <a href="{% url 'pricing' %}" style="background-color: #f1c40f; color: #000; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Переглянути тарифи</a>
+        </div>
     {% endif %}
+</div>
 {% endblock %}

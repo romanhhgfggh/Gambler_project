@@ -16,7 +16,8 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
     path('register/', views.register, name='register'),
     
-    path('pricing/', views.pricing_page, name='pricing'),
-    path('buy/<int:plan_id>/', views.buy_subscription, name='buy_subscription'),
+    path('pricing/', views.pricing_view, name='pricing'),
     path('vip/', views.vip_analytics, name='vip_analytics'),
+    path('checkout/<int:plan_id>/', views.checkout_view, name='checkout'),
+    path('checkout/success/', views.checkout_success_view, name='checkout_success'),
 ]

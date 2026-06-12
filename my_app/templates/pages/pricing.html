@@ -1,14 +1,54 @@
-{% for plan in plans %}
-    <div class="card" style="padding: 20px; text-align: center;">
-        <h2>{{ plan.title }}</h2>
-        <h3>${{ plan.price }}</h3>
-        
-        {% if plan.id in purchased_plan_ids %}
-            <button class="btn-custom btn-purchased" disabled>✓ Вже придбано (Активно)</button>
-        {% elif user.is_authenticated %}
-            <a href="{% url 'buy_subscription' plan.id %}" class="btn-custom btn-primary-custom">Придбати</a>
-        {% else %}
-            <a href="{% url 'login' %}" class="btn-custom btn-purchased">Увійдіть для покупки</a>
-        {% endif %}
-    </div>
-{% endfor %}
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .pricing-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 40px; }
+    .pricing-card { background-color: #1e1e1e; border: 1px solid #333; border-radius: 12px; padding: 40px 30px; width: 320px; text-align: center; color: #fff; transition: transform 0.3s ease, border-color 0.3s; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+    .pricing-card:hover { transform: translateY(-10px); border-color: #f1c40f; }
+    .pricing-card.pro { border: 2px solid #f1c40f; }
+    
+    .pro-badge { position: absolute; top: -14px; right: 50%; transform: translateX(50%); background: #f1c40f; color: #000; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
+    
+    .pricing-title { font-size: 28px; color: #f1c40f; margin-bottom: 10px; font-weight: bold; }
+    .pricing-price { font-size: 42px; margin-bottom: 25px; font-weight: bold; }
+    .pricing-price span { font-size: 18px; color: #888; font-weight: normal; }
+    .pricing-desc { color: #ccc; font-size: 15px; margin-bottom: 35px; line-height: 1.6; text-align: left; min-height: 120px; }
+    
+    .pricing-btn { display: block; width: 100%; padding: 14px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; transition: 0.3s; box-sizing: border-box; border: none; cursor: pointer; }
+    .pricing-btn:hover { background-color: #218838; color: #fff; }
+    .pricing-btn-login { background-color: #444; }
+    .pricing-btn-login:hover { background-color: #555; }
+    .pricing-btn-disabled { background-color: #333 !important; color: #777 !important; cursor: not-allowed !important; border: 1px solid #444; }
+</style>
+
+<div style="text-align: center; color: #fff; margin-top: 20px; margin-bottom: 40px;">
+    <h1 style="color: #f1c40f; font-size: 40px; margin-bottom: 10px;">Тарифи платформи</h1>
+    <p style="color: #aaa; font-size: 18px;">Оберіть рівень доступу до аналітики та професійних інструментів</p>
+</div>
+
+<div class="pricing-container">
+    {% for plan in plans %}
+        <div class="pricing-card {% if 'Pro' in plan.title %}pro{% endif %}">
+            {% if 'Pro' in plan.title %}
+                <div class="pro-badge">Рекомендуємо</div>
+            {% endif %}
+            
+            <div class="pricing-title">{{ plan.title }}</div>
+            <div class="pricing-price">${{ plan.price }}<span>/міс</span></div>
+            <div class="pricing-desc">
+                {{ plan.description }}
+            </div>
+            
+            {% if user.is_authenticated %}
+                {% if plan.id in user_plans %}
+                    <button class="pricing-btn pricing-btn-disabled" disabled>Вже придбано</button>
+                {% else %}
+                    <a href="{% url 'checkout' plan.id %}" class="pricing-btn">Оформити підписку</a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'login' %}?next={% url 'pricing' %}" class="pricing-btn pricing-btn-login">Увійдіть для покупки</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
